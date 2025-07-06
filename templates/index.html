@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JK Education Department – Official Public Poll</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+    .navbar {
+      background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+      backdrop-filter: blur(20px);
+      padding: 1.2rem 1rem;
+      position: relative;
+      z-index: 100;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+      background-size: 200% 100%;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .navbar h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2d3748;
+      text-align: center;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    /* Mobile-first approach */
+    .container {
+      max-width: 100%;
+      margin: 20px auto;
+      background: #ffffff;
+      backdrop-filter: blur(20px);
+      padding: 30px 20px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 10;
+      animation: slideUp 0.8s ease-out;
+      width: calc(100% - 20px);
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .poll-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .poll-header h2 {
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #2d3748;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .poll-header p {
+      font-size: 1rem;
+      color: #4a5568;
+      line-height: 1.6;
+      font-weight: 400;
+      padding: 0 10px;
+    }
+
+    .voting-section {
+      margin: 30px 0;
+    }
+
+    .vote-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .btn-vote {
+      font-size: 1.1rem;
+      padding: 18px 25px;
+      font-weight: 600;
+      border-radius: 15px;
+      border: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 280px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-vote::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-vote:hover::before,
+    .btn-vote:active::before {
+      left: 100%;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #48bb78, #38a169);
+      color: white;
+      box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+    }
+
+    .btn-yes:hover,
+    .btn-yes:active {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(72, 187, 120, 0.5);
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #f56565, #e53e3e);
+      color: white;
+      box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
+    }
+
+    .btn-no:hover,
+    .btn-no:active {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(245, 101, 101, 0.5);
+    }
+
+    .results {
+  padding: 0;
+  margin-top: 30px;
+}
+
+
+    .results h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+
+    .vote-count {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 15px 18px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease;
+    }
+
+    .vote-count:hover {
+      transform: translateX(3px);
+    }
+
+    .vote-count strong {
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 0.95rem;
+      flex: 1;
+    }
+
+    .vote-number {
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      min-width: 50px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: rgba(0, 0, 0, 0.9);
+      position: relative;
+      z-index: 10;
+    }
+
+    footer p {
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    footer strong {
+      color: #000000;
+      font-weight: 600;
+    }
+
+    /* Ripple effect for touch feedback */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Tablet and larger screens */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 50px 40px;
+        width: auto;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .navbar h1 {
+        font-size: 1.8rem;
+      }
+
+      .poll-header h2 {
+        font-size: 2.2rem;
+      }
+
+      .poll-header p {
+        font-size: 1.1rem;
+        padding: 0;
+      }
+
+      .vote-buttons {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .btn-vote {
+        font-size: 1.2rem;
+        padding: 18px 40px;
+        min-width: 160px;
+        width: auto;
+      }
+
+      .vote-count {
+        flex-direction: row;
+        text-align: left;
+      }
+
+      .vote-count strong {
+        font-size: 1rem;
+      }
+
+      .decorative-elements::before {
+        width: 200px;
+        height: 200px;
+        right: -100px;
+      }
+
+      .decorative-elements::after {
+        width: 150px;
+        height: 150px;
+        left: -75px;
+      }
+    }
+
+    /* Large screens */
+    @media (min-width: 1024px) {
+      .navbar {
+        padding: 1.5rem 0;
+      }
+
+      .results {
+        padding: 30px;
+      }
+
+      .results h3 {
+        font-size: 1.3rem;
+      }
+
+      footer {
+        padding: 40px 20px;
+      }
+
+      footer p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Very small screens */
+    @media (max-width: 480px) {
+      .container {
+        margin: 15px auto;
+        padding: 25px 15px;
+        width: calc(100% - 10px);
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+
+      .navbar h1 {
+        font-size: 1.2rem;
+        padding: 0 10px;
+      }
+
+      .poll-header h2 {
+        font-size: 1.4rem;
+      }
+
+      .poll-header p {
+        font-size: 0.9rem;
+      }
+
+      .btn-vote {
+        font-size: 1rem;
+        padding: 16px 20px;
+        max-width: 100%;
+      }
+
+      .vote-count {
+        padding: 12px 15px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .vote-count strong {
+        font-size: 0.9rem;
+      }
+
+      .vote-number {
+        font-size: 1rem;
+        padding: 6px 12px;
+      }
+
+      .results {
+        padding: 20px 15px;
+      }
+
+      .results h3 {
+        font-size: 1.1rem;
+      }
+
+      footer p {
+        font-size: 0.8rem;
+      }
+    }
+    .vote-bar-group {
+    margin-bottom: 25px;
+  }
+
+  .vote-label {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .vote-bar {
+    background-color: #e0e0e0;
+    height: 18px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .vote-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 1s ease-in-out;
+  }
+
+  .yes-fill {
+    background: linear-gradient(90deg, #48bb78, #38a169);
+  }
+
+  .no-fill {
+    background: linear-gradient(90deg, #f56565, #e53e3e);
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsm0131oew-Aikz9nZ9Ef6MnWmN8TyCyz7ZQ&s" alt="Logo" style="height: 26px; vertical-align: middle; margin-right: 8px; border-radius: 4px;">
+    Govt. of Jammu & Kashmir – Directorate of Education
+  </h1>
+</div>
+
+
+<div id="countdown-timer" style="text-align: center; font-weight: 600; font-size: 1.1rem; color: #2d3748; padding: 10px 0;">
+  🕒 Time left to vote: <span id="timer">Loading...</span>
+</div>
+
+
+<!-- Main Container -->
+<div class="container" style="font-family: 'Inter', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;">
+  <div class="poll-header">
+    <h2>&#128202; 10 Days Summer Vacation Extension</h2>
+    <p>Should summer vacations be extended by 10 more days across Jammu & Kashmir schools? Your voice matters in shaping education policy.</p>
+  </div>
+
+  <div class="voting-section">
+    <form method="POST" action="/vote">
+      <div class="vote-buttons">
+        <button type="submit" name="vote" value="yes" class="btn btn-vote btn-yes">
+          <span style="color: white;">&#9989;</span> Yes, Extend
+        </button>
+        <button type="submit" name="vote" value="no" class="btn btn-vote btn-no">
+          <span style="color: black;">&#10060;</span> No
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="results">
+  <h3>📈 Live Votes</h3>
+
+  <div class="vote-bar-group">
+  <div class="vote-label">
+    <span style="color: green;">✅ Yes - Extend Vacations</span>
+    <span id="yes-count">0</span>
+  </div>
+  <div class="vote-bar">
+    <div class="vote-fill yes-fill" id="yes-bar"></div>
+  </div>
+</div>
+
+<div class="vote-bar-group">
+  <div class="vote-label">
+    <span style="color: red;">❌ No - Open Schools</span>
+    <span id="no-count">0</span>
+  </div>
+  <div class="vote-bar">
+    <div class="vote-fill no-fill" id="no-bar"></div>
+  </div>
+</div>
+
+
+
+  <footer>
+    <p>This is an official government public feedback initiative.</p>
+    <p><strong>📚 Education Department | Union Territory of Jammu & Kashmir</strong></p>
+  </footer>
+
+  <script>
+// 🚫 Disable right-click
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// 🚫 Disable DevTools shortcuts like F12, Ctrl+Shift+I, Ctrl+U, etc.
+document.addEventListener("keydown", function(e) {
+  if (
+    e.key === "F12" ||                                // F12
+    (e.ctrlKey && e.key.toLowerCase() === "u") ||     // Ctrl+U
+    (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(e.key.toLowerCase())) // Ctrl+Shift+I/J/C
+  ) {
+    e.preventDefault();
+    console.log("Blocked 🤐");
+    return false;
+  }
+});
+
+// 👀 Detect DevTools using sneaky object inspection
+let devtoolsDetected = false;
+const detector = new Image();
+Object.defineProperty(detector, 'id', {
+  get: function () {
+    devtoolsDetected = true;
+    alert("Developer tools detected! For security reasons, you are being redirected.");
+    window.location.href = "https://www.google.com"; // or close tab or something dramatic
+  }
+});
+console.log("%c", detector); // Triggers the getter when DevTools are open
+
+// ⛔ Block dragging into new tab to see source
+document.addEventListener("dragstart", e => e.preventDefault());
+
+// 🛑 Extra measure for Ctrl+S, Ctrl+A (optional)
+document.addEventListener("keydown", function(e) {
+  if (
+    (e.ctrlKey && ["s", "a"].includes(e.key.toLowerCase()))
+  ) {
+    e.preventDefault();
+  }
+});
+
+  const yesVotes = {{ yes }};
+  const noVotes = {{ no }};
+
+  const yesBase = 93586;
+  const noBase = 96443;
+
+  const yesTotal = yesBase + yesVotes;
+  const noTotal = noBase + noVotes;
+
+  const maxBarWidth = 100000; // Base for progress bar (100%)
+
+  // Get DOM elements
+  const yesBar = document.getElementById('yes-bar');
+  const noBar = document.getElementById('no-bar');
+  const yesCount = document.getElementById('yes-count');
+  const noCount = document.getElementById('no-count');
+
+  // Update progress bar widths
+  yesBar.style.width = Math.min(100, (yesTotal / maxBarWidth) * 100) + '%';
+  noBar.style.width = Math.min(100, (noTotal / maxBarWidth) * 100) + '%';
+
+  // Update displayed counts
+  yesCount.textContent = yesTotal.toLocaleString();
+  noCount.textContent = noTotal.toLocaleString();
+function updateCountdown() {
+  const now = new Date();
+  const tonight = new Date();
+  tonight.setHours(23, 59, 59, 999);
+
+  const diff = tonight - now;
+
+  if (diff <= 0) {
+    document.getElementById('timer').textContent = "Voting closed";
+    return;
+  }
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById('timer').textContent =
+    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function setVoteCookie() {
+  const expiry = new Date();
+  expiry.setDate(expiry.getDate() + 7); // Cookie valid for 7 days
+  document.cookie = "voted=true; expires=" + expiry.toUTCString() + "; path=/";
+}
+
+function hasVoted() {
+  return document.cookie.split(';').some(cookie => cookie.trim().startsWith('voted='));
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (hasVoted()) {
+    document.querySelector('.voting-section').innerHTML = `
+      <div style="text-align: center; font-weight: 600; color: #2d3748; font-size: 1rem;">
+        ✅ Thank you! You have already voted.
+      </div>`;
+  }
+
+  // Add click listeners to voting buttons
+  document.querySelectorAll('.btn-vote').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setVoteCookie();
+    });
+  });
+});
+</script>
+
+
+<style>
+  @keyframes ripple {
+    to {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+</style>
+
+</body>
+</html>
