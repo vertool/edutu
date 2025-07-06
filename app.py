@@ -83,6 +83,8 @@ def submit():
                   (session['vote'], name, email, contact))
         conn.commit()
         conn.close()
+        print("TOKEN:", TELEGRAM_BOT_TOKEN)
+        print("CHAT ID:", TELEGRAM_CHAT_ID)
 
         # Send vote to Telegram
         message = f"""🗳️ <b>New Vote Submitted</b>\n
